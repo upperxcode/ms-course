@@ -1,5 +1,6 @@
 package com.jaocode.hrpayroll.feignclients;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.jaocode.hrpayroll.entities.Worker;
 
 @Component
-@FeignClient(name = "hr-worker", url = "http://localhost:8001", path = "/workers")
+@FeignClient(name = "hr-worker", path = "/workers")
+@RibbonClient(name = "hr-worker")
 public interface WorkerFeignClient {
 	
 	@GetMapping(value = "/{id}")
 	ResponseEntity<Worker> findById(@PathVariable Long id);
-
 }
